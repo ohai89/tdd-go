@@ -2,16 +2,26 @@ package main
 
 import "fmt"
 
+type Euro int
+
 type Wallet struct {
-	balance int
+	balance Euro
 }
 
-func (w *Wallet) Balance() int {
+type Stringer interface {
+	String() string
+}
+
+func (e Euro) String() string {
+	return fmt.Sprintf("%d EUR", e)
+}
+
+func (w *Wallet) Balance() Euro {
 	// Need to use pointer!
 	return w.balance
 }
 
-func (w *Wallet) Deposit(amount int) {
+func (w *Wallet) Deposit(amount Euro) {
 	// Need to use pointer so that balance lives at the same memory location
 	fmt.Printf("address of balance in Deposit is %v\n", &w.balance)
 	w.balance += amount
