@@ -1,6 +1,9 @@
 package main
 
 import "fmt"
+import "errors"
+
+var ErrInsufficientFunds = errors.New("insufficient funds")
 
 type Euro int
 
@@ -27,6 +30,10 @@ func (w *Wallet) Deposit(amount Euro) {
 	w.balance += amount
 }
 
-func (w *Wallet) Withdraw(amount Euro) {
+func (w *Wallet) Withdraw(amount Euro) error {
+	if amount > w.balance {
+		return ErrInsufficientFunds
+	}
 	w.balance -= amount
+	return nil
 }
